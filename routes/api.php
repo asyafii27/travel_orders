@@ -11,4 +11,8 @@
 |
 */
 
+use App\Http\Controllers\Api\Master\ProvinsiController;
 use Illuminate\Support\Facades\Route;
+
+Route::resource('master/provinsi', ProvinsiController::class);
+Route::resource('master/kota', ProvinsiController::class);
