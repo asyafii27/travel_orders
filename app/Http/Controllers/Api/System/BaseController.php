@@ -247,7 +247,7 @@ abstract class BaseController extends Controller
             Log::debug("Index => Check permission");
         }
 
-        $request->user()->hasPermission($this->permission . 'View');
+        // $request->user()->hasPermission($this->permission . 'View');
 
         if ($this->debug) Log::debug("Index => Permission [OK]");
 
@@ -523,7 +523,7 @@ abstract class BaseController extends Controller
             Log::debug("store => check hasPermission");
         }
 
-        $request->user()->hasPermission($this->permission . 'Create');
+        // $request->user()->hasPermission($this->permission . 'Create');
 
         if ($this->debug) Log::debug("store => check hasPermission [OK]");
 
@@ -547,7 +547,6 @@ abstract class BaseController extends Controller
         if ($this->debug) Log::debug("store => check validate [OK]");
 
         try {
-
             if (!empty(tenant('id'))) {
                 \DB::beginTransaction();
                 \DB::connection('mysql')->beginTransaction();
@@ -561,8 +560,7 @@ abstract class BaseController extends Controller
             if ($this->debug) Log::debug("input =>" . print_r($input, true));
 
             $model = new $this->model;
-
-            $input['created_by'] = $request->user()->username;
+            $input['created_by'] = $request->user()->name;
 
             $result = $model::create($input);
 
@@ -661,7 +659,7 @@ abstract class BaseController extends Controller
             Log::debug("update => check hasPermission");
         }
 
-        $request->user()->hasPermission($this->permission . 'Edit');
+        // $request->user()->hasPermission($this->permission . 'Edit');
 
         if ($this->debug)  Log::debug("update => do hasPermission [OK]");
 
@@ -697,7 +695,7 @@ abstract class BaseController extends Controller
 
             $model = new $this->model;
             $data  = $model->findOrFail($primaryKey);
-            $input['updated_by'] = $request->user()->username;
+            $input['updated_by'] = $request->user()->name;
 
             $data->update($input);
 
@@ -797,7 +795,7 @@ abstract class BaseController extends Controller
             Log::debug("destroy => Check Permission");
         }
 
-        $request->user()->hasPermission($this->permission . 'Delete');
+        // $request->user()->hasPermission($this->permission . 'Delete');
 
         if ($this->debug)  Log::debug("destroy => do hasPermission [OK]");
 

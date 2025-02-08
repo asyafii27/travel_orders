@@ -12,7 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('travel_schedules', function (Blueprint $table) {
-            //
+            $table->renameColumn('kota_from_id', 'regency_from_id');
+            $table->renameColumn('kota_to_id', 'regency_to_id');
+            $table->integer('regency_from_id')->index()->constrained('regencies')->onDelete('cascade')->change();
+            $table->integer('regency_to_id')->index()->constrainded('regencies')->onDelete('cascade')->change();
         });
     }
 
@@ -21,9 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('travel_schedules', function (Blueprint $table) {
-            $table->integer('regency_from_id')->index()->constrained('regencies')->onDelete('cascade');
-            $table->integer('regency_to_id')->index()->constrainded('regencies')->onDelete('cascade');
-        });
+       //
     }
 };

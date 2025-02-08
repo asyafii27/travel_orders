@@ -6,12 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class TravelSchedule extends Model
 {
-    protected $filable = [
-        'kota_from_id',
-        'kota_to_id',
+    /**
+    * The attributes that are mass assignable.
+    *
+    * @var array
+    */
+    protected $fillable = [
+        'regency_from_id',
+        'regency_to_id',
         'departure_start',
         'departure_finish',
         'quota',
-        'ticket_price'
+        'ticket_price',
+        'created_by',
+        'updated_by'
     ];
 }

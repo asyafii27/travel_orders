@@ -9,6 +9,8 @@ class TicketOrder extends Model
     protected $fillable = [
         'passanger_id',
         'travel_schedule_id',
-        'status'
+        'status',
+        'created_by',
+        'updated_by'
     ];
 }

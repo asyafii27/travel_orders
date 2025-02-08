@@ -11,6 +11,7 @@ use App\Models\Company\Perusahaan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Models\Customer\Passanger;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -38,7 +39,6 @@ class AuthController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
             'phone' => 'required|string|max:15',
-            'company_name' => 'required_if:role_id,2|max:155',
             'role_id' => 'required|numeric',
             'address' => 'required'
         ]);
@@ -57,35 +57,17 @@ class AuthController extends Controller
             $user = User::create($input);
             
             if ($input['role_id'] == 2) {
-                $inputPerusahaan = [
-                    'name' => $input['company_name'],
+                $inputPassanger = [
+                    'name' => $input['name'],
                     'email' => $input['email'],
                     'phone' => $input['phone'],
-                ];
-                $perusahaan = Perusahaan::create($inputPerusahaan);
-
-                $inputManeger = [
-                    'perusahaan_id' => $perusahaan->id,
-                    'name' => $input['name'],
-                    'phone_number' => $input['phone'],
                     'address' => $input['address']
                 ];
-                $manager = Manager::create($inputManeger);
+                $passanger = Passanger::create($inputPassanger);
 
-                $user->update(['reff_id' => $manager->id]);
-
-            } else if ($input['role_id'] == 3) {
-                $inputWorker = [
-                    'name' => $input['name'],
-                    'phone_number' => $input['phone'],
-                    'address' => $input['address']
-                ];
-
-                $worker = Worker::create($inputWorker);
-                $user->update(['reff_id' => $worker->id]);
+                $user->update(['reff_id' => $passanger->id]);
             }
 
-    
             DB::commit();
 
             return $this->successResponse('OK', $user, 201);

@@ -6,16 +6,28 @@ use Illuminate\Database\Eloquent\Model;
 
 class Passanger extends Model
 {
-    use model;
 
+    /**
+    * The attributes that are mass assignable.
+    *
+    * @var array
+    */
     protected $fillable = [
-        'name',
-        'email',
-        'address'
+      'name',
+      'email',
+      'phone',
+      'address',
+      'created_by',
+      'updated_by'
     ];
 
+     /** 
+    * Relasi dengan tabel ticket_orders
+    * 
+    * @return \Illuminate\Database\Eloquent\Relations\hasMany
+    */
     public function ticketOrder()
     {
-        $this->hasMany(TicketOrder::class, 'ticket_order_id', 'id');
+       $this->hasMany(TicketOrder::class, 'ticket_order_id', 'id');
     }
 }
